@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xlbs.apiservice.dao.imp.RoleDao">
+
+    <sql id="entity">
+        id as `key`,
+        created_by as createdBy,
+        created_date as createdDate,
+        last_modify_by as lastModifyBy,
+        last_modify_date as lastModifyDate
+    </sql>
+
+    <sql id="roleField">
+        id as id,
+        `name` as `name`,
+        <include refid="entity"/>
+    </sql>
+
+    <!--分页查询-->
+    <select id="find" resultType="com.xlbs.apiservice.entity.Role">
+        select
+          t1.id as `key`,
+          t1.id,
+          t1.`name` as `name`,
+          t4.menuIds,
+          t4.menuName,
+          t2.name as createdByName,
+          t1.created_date as createdDate,
+          t3.name as lastModifyByName,
+          t1.last_modify_date as lastModifyDate
+        from
+          t_role t1
+        left join t_user t2 on t1.created_by = t2.id
+        left join t_user t3 on t1.last_modify_by = t3.id
+        left join
+          (select
+            rm.`role_id` as roleId,
+            group_concat(rm.`menu_id`) as menuIds,
+            group_concat(m.`name`) as menuName
+          from
+            `t_role_menu` rm,`t_menu` m
+          where
+            rm.`menu_id`=m.`id`
+          group by
+            rm.`role_id`) as t4
+        on t1.`id`=t4.roleId
+        <where>
+            <if test="createdBy != null">
+                and t1.created_by = #{createdBy}
+            </if>
+        </where>
+    </select>
+
+    <!--查询-->
+    <select id="select" resultType="com.xlbs.apiservice.entity.Role">
+        select
+          <include refid="roleField"/>
+        from
+          t_role
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy}
+            </if>
+        </where>
+    </select>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.xlbs.apiservice.entity.Role">
+        insert into t_role
+          (id,`name`,created_by,created_date,last_modify_by,last_modify_date)
+        values
+          (#{id},#{name},#{createdBy},#{createdDate},#{lastModifyBy},#{lastModifyDate})
+
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterType="com.xlbs.apiservice.entity.Role">
+        update t_role
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="lastModifyBy != null">
+                last_modify_by = #{lastModifyBy},
+            </if>
+            <if test="lastModifyDate != null">
+                last_modify_date = #{lastModifyDate}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--删除-->
+    <delete id="delete" >
+        delete from t_role
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+
+
+
+</mapper>

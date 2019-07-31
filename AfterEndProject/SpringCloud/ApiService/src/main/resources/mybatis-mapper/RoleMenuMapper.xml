@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xlbs.apiservice.dao.imp.RoleMenuDao">
+
+    <sql id="entity">
+        id as `key`,
+        created_by as createdBy,
+        created_date as createdDate,
+        last_modify_by as lastModifyBy,
+        last_modify_date as lastModifyDate
+    </sql>
+
+    <sql id="roleMenuField">
+        role_id AS roleId,
+        menu_id as menuId,
+        <include refid="entity"/>
+    </sql>
+
+    <!--通过roleId查询角色菜单信息-->
+    <select id="findRoleMenu" resultType="com.xlbs.apiservice.entity.Menu">
+        select
+          rm.menu_id as `key`,
+          rm.menu_id as id,
+          m.parent_id as parentId
+        from
+          t_role_menu rm
+        left join t_menu m on rm.menu_id=m.id
+        <where>
+            <if test="roleId != null ">
+                role_id = #{roleId}
+            </if>
+            <if test="menuId != null ">
+                menu_id = #{menuId}
+            </if>
+        </where>
+    </select>
+
+    <!--批量保存角色信息-->
+    <insert id="batchSaveRoleMenu">
+        insert into t_role_menu
+          (role_id, menu_id, created_by, created_date,last_modify_by,last_modify_date)
+        values
+          <foreach collection ="list" item="roleMenu" separator =",">
+            (#{roleMenu.roleId}, #{roleMenu.menuId}, #{roleMenu.createdBy}, #{roleMenu.createdDate}, #{roleMenu.lastModifyBy}, #{roleMenu.lastModifyDate})
+          </foreach >
+    </insert>
+
+    <!--删除角色菜单信息-->
+    <delete id="deleteRoleMenu" >
+        delete from t_role_menu
+        <where>
+            <if test="roleId != null">
+                role_id = #{roleId}
+            </if>
+        </where>
+    </delete>
+
+
+
+</mapper>

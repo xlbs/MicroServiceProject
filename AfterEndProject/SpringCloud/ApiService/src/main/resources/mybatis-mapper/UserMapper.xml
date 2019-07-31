@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xlbs.apiservice.dao.imp.UserDao">
+
+    <sql id="entity">
+        created_by as createdBy,
+        created_date as createdDate,
+        last_modify_by as lastModifyBy,
+        last_modify_date as lastModifyDate
+    </sql>
+
+    <sql id="userField">
+        id,
+        user_name as username,
+        `password` AS `password`,
+        `name` as `name`,
+        `type` as `type`,
+        <include refid="entity"/>
+    </sql>
+
+    <!--分页查询-->
+    <select id="find" resultType="com.xlbs.apiservice.entity.User">
+        select
+          t1.id as `key`,
+          t1.id,
+          t1.user_name as username,
+          t1.`password` as `password`,
+          t1.`name` as `name`,
+          t1.`type` as `type`,
+          t4.roleName,
+          t2.name as createdByName,
+          t1.created_date as createdDate,
+          t3.name as lastModifyByName,
+          t1.last_modify_date as lastModifyDate
+        from
+          t_user t1
+        left join t_user t2 on t1.created_by = t2.id
+        left join t_user t3 on t1.last_modify_by = t3.id
+        left join
+          (select
+            ur.`user_id` as userid,
+            group_concat(ur.`role_id`) as userRoles,
+            group_concat(r.`name`) as roleName
+          from
+            `t_user_role` ur,`t_role` r
+          where
+            ur.`role_id`=r.`id`
+          group by
+            ur.`user_id`) as t4
+        on t1.`id`=t4.userid
+        <where>
+            <if test="createdBy != null">
+                and t1.created_by = #{createdBy}
+            </if>
+        </where>
+        order by t1.`type` asc
+    </select>
+
+    <!--查询-->
+    <select id="select" resultType="com.xlbs.apiservice.entity.User">
+        select
+          <include refid="userField"/>
+        from
+          t_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.xlbs.apiservice.entity.User">
+        insert into t_user
+          (id,user_name,`password`,`name`,`type`,created_by,created_date,last_modify_by,last_modify_date)
+        values
+          (#{id},#{username},#{password},#{name},#{type},#{createdBy},#{createdDate},#{lastModifyBy},#{lastModifyDate})
+
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterType="com.xlbs.apiservice.entity.User">
+        update t_user
+        <set>
+            <if test="username != null">
+                user_name=#{username},
+            </if>
+            <if test="name != null">
+                `name`=#{name},
+            </if>
+            <if test="type != null">
+                `type`=#{type},
+            </if>
+            <if test="lastModifyBy != null">
+                last_modify_by=#{lastModifyBy},
+            </if>
+            <if test="lastModifyDate != null">
+                last_modify_date=#{lastModifyDate}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--删除-->
+    <delete id="delete" >
+        delete from t_user
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <!--导出用户信息-->
+    <select id="exportUser" resultType="java.util.Map">
+        select
+          t1.id as userId,
+          t1.user_name as username,
+          t1.`password` as `password`,
+          t1.`name` as `name`,
+          t1.`type` as `type`,
+          t4.userRoles,
+          t4.roleNames,
+          t1.created_by as createdBy,
+          t1.created_date as createdDate,
+          t1.last_modify_by as lastModifyBy,
+          t1.last_modify_date as lastModifyDate,
+          t2.name as createdByName,
+          t3.name as lastModifyByName
+        from
+          t_user t1
+        left join t_user t2 on t1.id = t2.created_by
+        left join t_user t3 on t1.id = t3.last_modify_by
+        left join
+          (select
+            ur.`user_id` as userid,
+            group_concat(ur.`role_id`) as userRoles,
+            group_concat(r.`name`) as rolenames
+          from
+            `t_user_role` ur,`t_role` r
+          where
+            ur.`role_id`=r.`id`
+          group by
+            ur.`user_id`) as t4
+        on t1.`id`=t4.userid
+    </select>
+
+</mapper>
