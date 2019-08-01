@@ -2,7 +2,8 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
+const path = require('path');
+const ip = require('ip');
 
 module.exports = {
   dev: {
@@ -10,17 +11,25 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api':{
+        target: 'http://'+ ip.address()+ ':8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '/api/':'/'
+        }
+      }
+    },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 4000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: ip.address(), // can be overwritten by process.env.HOST
+    port: 3001, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
