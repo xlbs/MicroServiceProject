@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.xlbs</groupId>
-    <artifactId>spring_cloud_micro_service</artifactId>
+    <artifactId>springcloudmicroservice</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
