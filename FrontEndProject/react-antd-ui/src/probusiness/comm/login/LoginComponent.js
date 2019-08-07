@@ -16,7 +16,7 @@ class LoginComponent extends React.Component {
                     <LoginBox login={login}/>
                 </div>
                 <div className="login-footer">
-                    < p > 版权所有：谢李宝生 &nbsp;京ICP备18720968930 &nbsp;微信公众号: xlbs10086 &nbsp;</p>
+                    <p> 版权所有：谢李宝生 &nbsp;京ICP备18720968930 &nbsp;微信公众号: xlbs10086 &nbsp;</p>
                 </div>
             </div>
         )
