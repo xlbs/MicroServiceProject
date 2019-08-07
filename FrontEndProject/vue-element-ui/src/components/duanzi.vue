@@ -46,6 +46,9 @@
     mounted: function () {
       this.showList()
     },
+    created: function(){
+
+    },
     methods: {
       showList(){
         this.arr = [
