@@ -1,12 +1,12 @@
 <template>
   <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-form">
     <p class="error-msg">{{errorMsg}}</p>
-    <el-form-item prop="username">
+    <el-form-item class="el-form-item_usernmae" prop="username">
       <label class="label">用户名</label>
       <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <label class="label">密  码</label>
+      <label class="label">密码</label>
       <el-input v-model="loginForm.password" placeholder="请输入密码" type="password" show-password></el-input>
     </el-form-item>
     <div style="height: 35px">
@@ -14,16 +14,16 @@
       <p class="login-form-forget" @click="forgetPassword()">忘记密码</p>
     </div>
     <el-button style="width: 100%" type="primary" @click="submitForm('loginForm')">登入</el-button>
-    <!--<el-form-item>-->
-
-    <!--</el-form-item>-->
-    <!--<el-form-item>-->
-
-    <!--</el-form-item>-->
   </el-form>
 </template>
 
 <script>
+  import {Ajax,AjaxPromise} from "@/utils/Ajax";
+  import {CurrentSessionCache} from "@/utils/CurrentCache";
+
+  const BASE_URL = $requestContext.path;
+  const API_SERVICE = BASE_URL + "/api_service";
+
   export default {
     name: "loginForm",
     data() {
@@ -38,15 +38,16 @@
             { required: true, message: '请输入用户名', trigger: 'blur' },
           ],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' }
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 6, message: '密码为6位', trigger: 'blur' }
           ],
         },
         errorMsg:"",
       }
     },
-    //mounted函数指的页面一渲染首先执行的函数。 这里首先执行showlist函数
+    //mounted函数指的页面一渲染首先执行的函数。
     mounted: function () {
-
+      CurrentSessionCache.set("LOGIN_STATUS",false)
     },
     created: function(){
 
@@ -54,11 +55,23 @@
     methods: {
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
+          debugger;
           if(valid){
-            console.log(this.loginForm.remember);
-            console.log(this.loginForm.password);
-            console.log(this.loginForm.username);
+            let url = BASE_URL+ "/loginB";
+            const config = {};
+            config.method = "POST";
+            config.data = this.loginForm;
+            AjaxPromise(url,config).then(res => {
+              if(res.state){
+                CurrentSessionCache.set("LOGIN_STATUS",true);//已登入
+                this.$router.push("/");
+
+              }else{
+                this.errorMsg = res.msg;
+              }
+            })
           }else{
+            this.errorMsg = "请输入用户名或密码";
             return false;
           }
         });
@@ -82,17 +95,17 @@
     right: 0px;
   }
   .label {
-    height: 30px;
     font-size: 18px;
     color: #00b2f9;
     position: absolute;
-    top: -20px;
-    left: 20px;
+    top: -15px;
+    left: 15px;
     background: #fff;
+    line-height: normal;
     z-index: 1;
   }
   .error-msg {
-    margin: 10px 0px;
+    margin: 5px 0px 15px 0px;
     height: 20px;
     font-size: 16px;
     font-weight: 600;
@@ -108,5 +121,8 @@
     font-weight: 500;
     font-size: 14px;
     color: #00b2f9;;
+  }
+  .el-form-item_usernmae{
+    margin-bottom: 35px;
   }
 </style>
