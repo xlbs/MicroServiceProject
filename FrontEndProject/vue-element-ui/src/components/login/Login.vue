@@ -20,30 +20,18 @@
     },
     data() {
       return {
-        // temp: "我是duanzi页面",
-        // arr: [],
-        // username: '',
-        // userage: '',
-        // usersex: '男',
+
       }
     },
-    //mounted函数指的页面一渲染首先执行的函数。 这里首先执行showlist函数
+    //mounted函数指的页面一渲染首先执行的函数
     mounted: function () {
-      this.showList()
+
     },
     created: function(){
 
     },
     methods: {
-      showList(){
-        this.arr = [
-          {name:'tom',age:18,sex:'male'},
-          {name:'jerry',age:19,sex:'male'}
-        ]
-      },
-      addStu(){
-        this.arr.push({name:this.username,age:this.userage,sex:this.usersex})
-      }
+
     }
   }
 </script>
@@ -54,7 +42,7 @@
     height: 100%;
     /*background-size: cover;*/
     /*background-repeat: no-repeat;*/
-    background-image: url("../assets/background.jpg");
+    background-image: url("../../assets/background.jpg");
   }
   .login-frame{
     width: 400px;

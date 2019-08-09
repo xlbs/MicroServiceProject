@@ -63,8 +63,24 @@
             config.data = this.loginForm;
             AjaxPromise(url,config).then(res => {
               if(res.state){
-                CurrentSessionCache.set("LOGIN_STATUS",true);//已登入
-                this.$router.push("/");
+                CurrentSessionCache.set("USER",res.data);
+                if(res.data.userId || res.data.userId===0){
+                  url = API_SERVICE + "/menu/"+res.data.userId;
+                  AjaxPromise(url).then(res =>{
+                    if(res.data){
+                      CurrentSessionCache.set("MENU",res.data);
+                      let path;
+                      if(res.data[0].children.length===0){
+                        path = res.data[0].url;
+                      }else{
+                        path = res.data[0].url+res.data[0].children[0].url;
+                      }
+                      CurrentSessionCache.set("LOGIN_STATUS",true);//已登入
+                      this.$router.push(path);
+                    }
+                  });
+
+                }
 
               }else{
                 this.errorMsg = res.msg;

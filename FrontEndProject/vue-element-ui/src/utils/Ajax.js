@@ -148,54 +148,54 @@ export const syncAjax = {
  * @returns {Promise<any>}
  * @constructor
  */
-export function AjaxPromise(url, config, dispatch) {
-    const request = {
-        params: { rand: Math.random() }
-    };
-    if(!config){
-        request.url = url;
-        request.method = 'GET';
-    }else {
-        request.url = url;
-        request.method = config.method;
-        if(config.headers){
-            request.headers = config.headers;
-        }
-        if(config.params){
-            request.params = Object.assign(request.params, config.params);
-        }
-        if(config.auth){
-            request.auth = config.auth;
-        }
-        if(config.data){
-            request.data = config.data;
-        }
-        debugger;
-        return new Promise((resolve, reject) => {
-            axios(request).then(
-                function (response) {
-                    if(response && response.data){
-                        resolve && resolve(response.data);
-                    }
-                    // else if(response.data.code===20001 || response.data.code===20002){
-                    //     resolve && resolve(response.data);
-                    // }
-                    else{
-                        // showInfo(response.data.msg);
-                    }
-                }
-            ).catch(
-                function (error) {
-                    if(error.response.data.status===10000){
-                        // dispatch(showLoginBox());
-                    }else{
-                        // showInfo("未知错误,请求支援");
-                    }
-                }
-            )
-        })
+export function AjaxPromise(url, config) {
+  const request = {
+    params: { rand: Math.random() }
+  };
 
+  if(!config){
+    request.url = url;
+    request.method = 'GET';
+  }else {
+    request.url = url;
+    request.method = config.method;
+    if(config.headers){
+      request.headers = config.headers;
     }
+    if(config.params){
+      request.params = Object.assign(request.params, config.params);
+    }
+    if(config.auth){
+      request.auth = config.auth;
+    }
+    if(config.data){
+      request.data = config.data;
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    axios(request).then(
+      function (response) {
+        if(response && response.data){
+          resolve && resolve(response.data);
+        }
+        // else if(response.data.code===20001 || response.data.code===20002){
+        //     resolve && resolve(response.data);
+        // }
+        else{
+          // showInfo(response.data.msg);
+        }
+      }
+    ).catch(
+      function (error) {
+        if(error.response.data.status===10000){
+          // dispatch(showLoginBox());
+        }else{
+          // showInfo("未知错误,请求支援");
+        }
+      }
+    )
+  })
 
 }
 

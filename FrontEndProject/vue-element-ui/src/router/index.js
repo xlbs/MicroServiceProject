@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from '@/components/Login';
+import Login from '@/components/login/Login';
+import Main from '@/components/main/Main';
+import Home from '@/components/home/Home';
+import System from '@/components/system/System';
+import UserManagement from '@/components/system/content/UserManagement';
+import RoleManagement from '@/components/system/content/RoleManagement';
+import MenuManagement from '@/components/system/content/MenuManagement';
 import NotFound from '@/components/NotFound';
 import HelloWorld from '@/components/HelloWorld';
 import duanzi from '@/components/duanzi';
@@ -12,26 +18,51 @@ const router = new Router({
   routes: [
     {
       path: '/login',
-      name: '登入页面', //这个名字不是很重要，可写可不写，主要是区分组件功能。
-      component: Login
+      name: 'login', //这个名字不是很重要，可写可不写，主要是区分组件功能。
+      component: Login,
     },
     {
       path: '/',
-      name: '首页',
-      component: HelloWorld
-    },
-    {
-      path: '/duanzi',
-      name: 'duanziff',
-      component: duanzi
+      name: 'main',
+      component: Main,
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: Home,
+        },
+        {
+          path: '/system',
+          name: 'system',
+          component: System,
+          children:[
+            {
+              path: '/userManagement',
+              name: 'userManagement',
+              component: UserManagement,
+            },
+            {
+              path: '/roleManagement',
+              name: 'roleManagement',
+              component: RoleManagement,
+            },
+            {
+              path: '/menuManagement',
+              name: 'menuManagement',
+              component: MenuManagement,
+            },
+          ]
+        },
+      ]
+
     },
     {
       path: '/error',
-      name: '404页面',
+      name: '404',
       component: NotFound,
     }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   const LOGIN_STATUS = CurrentSessionCache.get("LOGIN_STATUS");

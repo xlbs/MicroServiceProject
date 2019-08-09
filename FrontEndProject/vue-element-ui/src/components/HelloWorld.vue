@@ -1,13 +1,8 @@
 <template>
   <div class="hello">
-    <div>头部</div>
-    <div>
-      <router-view/>
-    </div>
-    <div>
-      <router-link to="/duanzi">duanzi页面</router-link>
-    </div>
-    <div>尾部</div>
+    <!--<router-link to="/userManagement">去到Cpage</router-link>-->
+    <!--<router-link to="/userManagement">去到Dpage</router-link>-->
+    <router-view></router-view>
   </div>
 </template>
 
