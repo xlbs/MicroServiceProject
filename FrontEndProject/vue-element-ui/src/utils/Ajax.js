@@ -1,6 +1,5 @@
 import axios from 'axios';
-// import { showInfo } from '../components/dialog/MessageDialog';
-// import {setErrorMsg, showLoginBox} from "../actions/Login";
+import {Message,MessageBox} from 'element-ui';
 
 //自动切换环境
 // debugger;
@@ -182,17 +181,21 @@ export function AjaxPromise(url, config) {
         // else if(response.data.code===20001 || response.data.code===20002){
         //     resolve && resolve(response.data);
         // }
-        else{
+        // else{
           // showInfo(response.data.msg);
-        }
+        // }
       }
     ).catch(
       function (error) {
         if(error.response.data.status===10000){
           // dispatch(showLoginBox());
         }else{
-          // showInfo("未知错误,请求支援");
+          MessageBox.alert("服务器异常，请稍后重试","提示",{
+            type: 'error',
+          });
+          reject && reject(error.data)
         }
+
       }
     )
   })

@@ -79,9 +79,7 @@
                       this.$router.push(path);
                     }
                   });
-
                 }
-
               }else{
                 this.errorMsg = res.msg;
               }
