@@ -1,5 +1,5 @@
 <template>
-  <el-containers class="root">
+  <el-container class="root">
     <el-header>
       <keep-alive>
         <HeaderNav></HeaderNav>
@@ -13,7 +13,7 @@
         <FooterNav></FooterNav>
       </keep-alive>
     </el-footer>
-  </el-containers>
+  </el-container>
 </template>
 
 <script>
