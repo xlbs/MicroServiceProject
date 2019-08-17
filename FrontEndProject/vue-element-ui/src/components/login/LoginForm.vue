@@ -39,7 +39,7 @@
           ],
           password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, max: 6, message: '密码为6位', trigger: 'blur' }
+            { min: 6, max: 6, message: '密码为6位', trigger: 'change' }
           ],
         },
         errorMsg:"",
