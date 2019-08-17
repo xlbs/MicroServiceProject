@@ -2,7 +2,9 @@
   <div class="userManagement">
     <el-table
       :data="tableData"
-      :header-cell-style="{background: '#eef1f6'}"
+      border
+      :header-cell-style="{background: '#eef1f6',textAlign: 'center'}"
+      v-on: header-dragend="headerdragend"
       style="width: 100%"
       height="500">
       <el-table-column
@@ -14,6 +16,7 @@
       </el-table-column>
       <el-table-column
         fixed
+        align="center"
         label="操作"
         width="100">
         <template slot-scope="scope">
@@ -32,14 +35,16 @@
         width="120">
       </el-table-column>
       <el-table-column
-        prop="province"
-        label="省份"
-        width="120">
+        align="center"
+        prop="createdDate"
+        label="创建时间"
+        width="140">
       </el-table-column>
       <el-table-column
-        prop="city"
-        label="市区"
-        width="120">
+        align="center"
+        prop="lastModifyDate"
+        label="最后修改时间"
+        width="140">
       </el-table-column>
       <el-table-column
         prop="address"
@@ -104,6 +109,9 @@
           this.total = res.data.total;
           this.tableData = res.data.list;
         })
+      },
+      headerdragend(){
+
       }
 
 
