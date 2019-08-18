@@ -2,9 +2,8 @@
   <div class="userManagement">
     <el-table
       :data="tableData"
-      border
-      :header-cell-style="{background: '#eef1f6',textAlign: 'center'}"
-      v-on: header-dragend="headerdragend"
+      header-cell-class-name="header_row"
+      :cell-class-name="getCellClass"
       style="width: 100%"
       height="500">
       <el-table-column
@@ -16,7 +15,6 @@
       </el-table-column>
       <el-table-column
         fixed
-        align="center"
         label="操作"
         width="100">
         <template slot-scope="scope">
@@ -35,15 +33,17 @@
         width="120">
       </el-table-column>
       <el-table-column
-        align="center"
         prop="createdDate"
         label="创建时间"
+        :formatter="formatterDate"
+        align="center"
         width="140">
       </el-table-column>
       <el-table-column
-        align="center"
         prop="lastModifyDate"
         label="最后修改时间"
+        :formatter="formatterDate"
+        align="center"
         width="140">
       </el-table-column>
       <el-table-column
@@ -75,6 +75,7 @@
 <script>
   import {AjaxPromise} from "@/utils/Ajax";
   import {CONSTANT} from "@/utils/Constant";
+  import {formatterDate} from "@/utils/CommUtils";
 
   export default {
     name: 'userManagement',
@@ -82,8 +83,17 @@
       this.find();
     },
     methods: {
+      getCellClass({row, column, rowIndex, columnIndex}){
+        if(columnIndex==1){
+          return "fixedColumn_cell";
+        }
+        return "table_cell";
+      },
       indexMethod(index) {
         return CONSTANT.TABLE.PAGE_SIZE*(CONSTANT.TABLE.CURRENT_PAGE-1)+index+1;
+      },
+      formatterDate(row, column, cellValue, index){
+        return formatterDate(cellValue,CONSTANT.DATE.YYYY_MM_DD);
       },
       handleClick(row) {
         console.log(row);
@@ -110,10 +120,6 @@
           this.tableData = res.data.list;
         })
       },
-      headerdragend(){
-
-      }
-
 
     },
     data () {
@@ -131,8 +137,4 @@
     width: 800px;
     margin: auto;
   }
-  .headersss{
-    color: #00b2f9 !important;
-  }
-
 </style>

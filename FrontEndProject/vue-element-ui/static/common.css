@@ -1,0 +1,16 @@
+.header_row{
+  background-color: #CCCCCC !important;
+  border-right: 1px solid #eef1f6;
+  text-align: center !important;
+  color: #ffffff;
+  height: 50px;
+}
+.table_cell{
+  height: 40px !important;
+  padding: 1px 0px !important;
+}
+.fixedColumn_cell{
+  border-right: 1px solid #eef1f6;
+  height: 40px !important;
+  padding: 1px 0px !important;
+}
