@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {Ajax,syncAjax} from "./Ajax";
-import { showInfo } from '../components/dialog/MessageDialog';
-import {setErrorMsg, showLoginBox} from "../actions/Login";
+// import { showInfo } from '../components/dialog/MessageDialog';
+// import {setErrorMsg, showLoginBox} from "../actions/Login";
 import {CurrentSessionCache} from "./CurrentCache";
+import {CONSTANT} from "@/utils/Constant";
 
 const BASE_URL = $requestContext.path;
 const API_SERVICE = BASE_URL + "/api_service";
@@ -66,15 +67,32 @@ export function objToArrayValue(obj) {
  * @param timestamp
  * @returns {string}
  */
-export function formatDate(timestamp) {
+export function formatterDate(timestamp,formatter) {
+  if(timestamp){
     const date = new Date(timestamp);
-    const year = date.getFullYear() + '-';
-    const month = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    const day = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) +' ';
-    const hour = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
-    const minute = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+    const year = date.getFullYear();
+    const month = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
+    const day = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate());
+    const hour = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours());
+    const minute = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
     const second = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
-    return year+month+day+hour+minute+second;
+    if(formatter){
+      if(formatter==CONSTANT.DATE.YYYY_MM_DD){
+        return year+"-"+month+"-"+day;
+      }else if(formatter==CONSTANT.DATE.YYYYMMDD){
+        return year+"/"+month+"/"+day;
+      }else if(formatter==CONSTANT.DATE.YYYYMMDD_HHmmss){
+        return year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+      }else if(formatter==CONSTANT.DATE.YYYYMMDDHHmmss){
+        return year+"/"+month+"/"+day+" "+hour+":"+minute+":"+second;
+      }else{
+        return year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+      }
+    }else{
+      return year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
+    }
+  }
+  return "";
 }
 
 /**
