@@ -19,7 +19,7 @@ eureka:
     lease-expiration-duration-in-seconds: 60
   client:
     service-url:
-      defaultZone: http://39.106.231.227:8888/eureka/
+      defaultZone: http://172.17.73.241:8888/eureka/
 
 feign:
   hystrix:
