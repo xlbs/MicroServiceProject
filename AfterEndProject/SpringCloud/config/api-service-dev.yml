@@ -31,6 +31,6 @@ eureka:
 #数据库配置，阿里druid连接池
 mysql:
   datasource:
-    url: jdbc:mysql://localhost:3306/xlbs_dev?useAffectedRows=true&useSSL=false
-    username: root
-    password: xlbs.com
+    url: jdbc:mysql://39.106.231.227:3306/xlbs_dev?useAffectedRows=true&useSSL=false
+    username: user
+    password: xielbs52O?
