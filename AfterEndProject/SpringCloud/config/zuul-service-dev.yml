@@ -36,7 +36,7 @@ eureka:
     lease-expiration-duration-in-seconds: 60 #服务失效时间，默认为90秒
   client:
     service-url:
-      defaultZone: http://39.106.231.227:8888/eureka/
+      defaultZone: http://localhost:8888/eureka/
 
 #日志配置
 #logging:

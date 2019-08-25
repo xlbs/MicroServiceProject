@@ -15,7 +15,7 @@ spring:
     database: 0 #Redis数据库索引(默认为0)
 
 server:
-  port: 8081 #服务端口
+  port: 8083 #服务端口
 
 #eureka服务配置
 eureka:
@@ -29,8 +29,8 @@ eureka:
       defaultZone: http://localhost:8888/eureka/
 
 #数据库配置，阿里druid连接池
-mysql:
-  datasource:
-    url: jdbc:mysql://39.106.231.227:3306/xlbs_dev?useAffectedRows=true&useSSL=false
-    username: user
-    password: xielbs52O?
+#mysql:
+#  datasource:
+#    url: jdbc:mysql://39.106.231.227:3306/xlbs_dev?useAffectedRows=true&useSSL=false
+#    username: user
+#    password: xielbs52O?

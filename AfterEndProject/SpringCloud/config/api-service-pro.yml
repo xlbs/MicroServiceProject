@@ -1,23 +1,31 @@
-#spring配置
 spring:
-  profiles: #环境配置
-    active: dev #开发环境:dev 生产环境:pro
+  profiles:
+    active: pro
+  redis:
+    host: 172.17.73.241
+    port: 6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 2000
+    database: 0
 
 server:
-  port: 8081 #服务端口
+  port: 8081
 
-#eureka服务配置
 eureka:
-  instance: #服务实例
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port} #服务实例名称
-    prefer-ip-address: true #不使用主机名来定义注册中心的地址，而使用IP地址的形式，如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP，否则自动获取除环路IP外的第一个IP地址
-    lease-renewal-interval-in-seconds: 10 #服务续约任务的调用时间，默认为30秒
-    lease-expiration-duration-in-seconds: 60 #服务失效时间，默认为90秒
+  instance:
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 60
   client:
     service-url:
       defaultZone: http://172.17.73.241:8888/eureka/
 
-#数据库配置，阿里druid连接池
 mysql:
   datasource:
     url: jdbc:mysql://172.17.73.241:3306/xlbs_dev?useAffectedRows=true&useSSL=false
