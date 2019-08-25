@@ -21,6 +21,9 @@ const router = new Router({
       path: '/login',
       name: 'login', //这个名字不是很重要，可写可不写，主要是区分组件功能。
       component: Login,
+      meta: {
+        title: '欢迎使用本系统',
+      }
     },
     {
       path: '/',
@@ -31,6 +34,9 @@ const router = new Router({
           path: '/home',
           name: 'home',
           component: Home,
+          meta: {
+            title: '首页',
+          }
         },
         {
           path: '/system',
@@ -66,6 +72,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title == undefined?'欢迎使用本系统':to.meta.title;
   const LOGIN_STATUS = CurrentSessionCache.get("LOGIN_STATUS");
   if(to.path != "/login"){
     if(LOGIN_STATUS){
