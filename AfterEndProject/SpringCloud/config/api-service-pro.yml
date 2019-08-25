@@ -6,9 +6,9 @@ spring:
     port: 6379
     password:
     pool:
-      max-active: 8
+      max-active: 4
       max-wait: -1
-      max-idle: 8
+      max-idle: 4
       min-idle: 0
     timeout: 2000
     database: 0
@@ -26,8 +26,8 @@ eureka:
     service-url:
       defaultZone: http://172.17.73.241:8888/eureka/
 
-#mysql:
-#  datasource:
-#    url: jdbc:mysql://172.17.73.241:3306/xlbs_dev?useAffectedRows=true&useSSL=false
-#    username: root
-#    password: xielbs52O!
+mysql:
+  datasource:
+    url: jdbc:mysql://47.106.161.65:3306/xlbs_dev?useAffectedRows=true&useSSL=false
+    username: root
+    password: chero@123
