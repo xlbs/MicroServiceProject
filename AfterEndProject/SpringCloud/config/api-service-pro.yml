@@ -26,8 +26,8 @@ eureka:
     service-url:
       defaultZone: http://172.17.73.241:8888/eureka/
 
-mysql:
-  datasource:
-    url: jdbc:mysql://172.17.73.241:3306/xlbs_dev?useAffectedRows=true&useSSL=false
-    username: root
-    password: xielbs52O!
+#mysql:
+#  datasource:
+#    url: jdbc:mysql://172.17.73.241:3306/xlbs_dev?useAffectedRows=true&useSSL=false
+#    username: root
+#    password: xielbs52O!
