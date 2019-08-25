@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCaching
-@ComponentScan(value = "com.xlbs.commutils")
-@ComponentScan(value = "com.xlbs.apiservice")
+//@ComponentScan(value = "com.xlbs.commutils")
+//@ComponentScan(value = "com.xlbs.apiservice")
 public class ApiServiceApplication {
 
     public static void main(String[] args) {
