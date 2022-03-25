@@ -15,7 +15,9 @@ public abstract class AbstractExport<T> implements Export<T> {
         }catch (IOException e){
             throw new RuntimeException("Create File Failed: ", e);
         }
+
         exportTask.setFilePath(FilePath.getExportPath());
+
         try {
             OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
             doExport(out, exportTask.getArgument());
