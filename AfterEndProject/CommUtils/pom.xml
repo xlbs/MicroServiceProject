@@ -19,6 +19,7 @@
             <artifactId>constantjar</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <!--spring上下文包，在加载spring配置文件时用到-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -105,19 +106,19 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin}</version>
-                <configuration>
-                    <source>${maven.compile.source}</source>
-                    <target>${maven.compile.target}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>${maven.compiler.plugin}</version>-->
+<!--                <configuration>-->
+<!--                    <source>${maven.compile.source}</source>-->
+<!--                    <target>${maven.compile.target}</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
     
 </project>
